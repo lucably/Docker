@@ -38,6 +38,8 @@ WORKDIR => Significa qual o diretório ele usará, "Trabalhe neste diretório".
 
 COPY/ADD => Adiciona quais arquivos ele usara na imagem PASTA_LOCAL -> IMAGEM.
 
+ADD => Serve para copiar algo de algum site ou zip => exp: ADD https:teste.com.br/teste.json . ou ADD teste.zip .  (lembrando q tem origiem = https:teste.com.br/teste.json e teste.zip e o destino = .)
+
 RUN => Rode este processo, serve para colocar a aplicação em funcionamento.
 
 ENV => O que vc precisa para rodar a aplicação (Variaveis de ambiente).
