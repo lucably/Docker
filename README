@@ -1,0 +1,25 @@
+Datalhamentos:
+
+O que é uma Imagem?
+
+Na imagem possui tudo que a sua aplicação precise para rodar possuindo:
+
+1. Um Sistema Operacional - OS;
+2. Bliblotecas;
+3. Arquivos que seu App utilizará;
+4. Variaveis de ambiente;
+
+Para visualizar suas imagens basta rodar => "docker images"
+
+O que é um Container?
+
+Um processo que roda dentro de uma maquina, o Container é criado a partir de uma imagem.
+
+Para Visualiza-la "docker ps" ou se quiser ver todas ja rodadas "docker ps -a"
+
+Resumindo.
+
+Temos um APP, dentro do APP criamos um DOCKERFILE que no qual, gera uma IMAGEM. Da IMAGEM podemos construir/deletar/pausar/retornar um
+CONTAINER.
+
+APP -> IMAGEM -> CONTAINER
