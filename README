@@ -2,8 +2,6 @@ Datalhamentos:
 
 O que é uma Imagem?
 
-
-
 Na imagem possui tudo que a sua aplicação precise para rodar possuindo:
 
 1. Um Sistema Operacional - OS;
@@ -13,9 +11,10 @@ Na imagem possui tudo que a sua aplicação precise para rodar possuindo:
 
 Para visualizar suas imagens basta rodar => "docker images"
 
+
+
+
 O que é um Container?
-
-
 
 Um processo que roda dentro de uma maquina, o Container é criado a partir de uma imagem.
 
@@ -27,6 +26,7 @@ Temos um APP, dentro do APP criamos um DOCKERFILE que no qual, gera uma IMAGEM. 
 CONTAINER.
 
 APP -> IMAGEM -> CONTAINER
+
 
 
 
