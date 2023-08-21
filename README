@@ -2,6 +2,8 @@ Datalhamentos:
 
 O que é uma Imagem?
 
+
+
 Na imagem possui tudo que a sua aplicação precise para rodar possuindo:
 
 1. Um Sistema Operacional - OS;
@@ -13,6 +15,8 @@ Para visualizar suas imagens basta rodar => "docker images"
 
 O que é um Container?
 
+
+
 Um processo que roda dentro de uma maquina, o Container é criado a partir de uma imagem.
 
 Para Visualiza-la "docker ps" ou se quiser ver todas ja rodadas "docker ps -a"
@@ -23,3 +27,23 @@ Temos um APP, dentro do APP criamos um DOCKERFILE que no qual, gera uma IMAGEM. 
 CONTAINER.
 
 APP -> IMAGEM -> CONTAINER
+
+
+
+O que é o Dockerfile?
+
+FROM => Qual Imagem ele irá rodar, qual o OS e qual a plataforma (node, python) etc...
+
+WORKDIR => Significa qual o diretório ele usará, "Trabalhe neste diretório".
+
+COPY/ADD => Adiciona quais arquivos ele usara na imagem PASTA_LOCAL -> IMAGEM.
+
+RUN => Rode este processo, serve para colocar a aplicação em funcionamento.
+
+ENV => O que vc precisa para rodar a aplicação (Variaveis de ambiente).
+
+EXPOSE => Responsavel pelo controle da porta que irá usar. Exp: localhost:3000. A porta 3000 o expose que adiciona.
+
+USER => Qual usuario que vai executar a aplicação.
+
+CMD/ENTRYPOINT => Quando a aplicação estiver funcionando qual comando ela irá executar. 
