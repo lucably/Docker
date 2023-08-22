@@ -57,7 +57,6 @@ obs: meu_volume: /app/dados, este "/app/dados" é o diretório da sua maquina lo
 exp: docker run -dp 3000:3000 --name kiwi -v app-dados:/app/dados app:v2
 Nesta linha vc esta criando um container com nome "kiwi" rodando background(nao travando o terminal), usando o volume chamado "app-dados" adicionando ele dentro da pasta "app/dados" do container e utilizando a imagem "app:v2" na versao 2.
 
-
 4) Para conferir se foi criado com sucesso, execute => docker exec -it {NOME_CONTAINER} sh
 obs: De um "ls" e ve se seu volume foi criado.
 exp: "ls" ve que terá a pasta "dados" dentro do seu container e se entrar dentro dela n terá nenhum dado (pq nao adicionamos nada).
@@ -100,3 +99,100 @@ EXPOSE => Responsavel pelo controle da porta que irá usar. Exp: localhost:3000.
 USER => Qual usuario que vai executar a aplicação.
 
 CMD/ENTRYPOINT => Quando a aplicação estiver funcionando qual comando ela irá executar. 
+
+
+
+
+
+O que é DOCKER COMPOSE: 
+
+Suponha que vc tenha uma aplicação que possui as partes de Frontend, backend e DB. Seria legal ter um container para cada aplicação, para isso utilizamos o docker-compose.
+
+1) Para rodar basta executar o comando => docker-compose up
+
+O que é o docker-compose.yml?
+
+É uma linguagem muito utilizadas para escrever arquivos de configurações de cima para baixo em uma sequencia lógica.
+
+VERSION => Versao do docker-compose, no momento utilizamos a 3.8:
+version: "3.8"
+
+SERVICES => Os serições utilizados. Recomendação: liste todos os seus serviços utilizados na identação e tambem o volume utilizado na aplicacao chamado vidly, no exemplo dado, faça:
+
+services:
+    frontend:
+    backend:
+    db:
+volumes:
+  vidly:
+
+Explorando agora cada container, pegando o frontend e o backend.
+
+FRONTEND/BACKEND => Se reparar dentro da pasta possui um arquivo Dockerfile, entao ao inves de ter que declarar tudo de novo basta utilizar o arquivo Dockerfile dentro da pasta frontend, utilizando o "build", ficando assim.
+
+services:
+    frontend:
+        build: ./frontend
+    backend:
+        build: ./backend
+    db:
+
+Agora pegando o container do db, iremos fazer diferente, repare que no db nao tem um arquivo Dockerfile, entao declaramos qual a image que ele ira utilizar;
+
+services:
+    frontend:
+        build: ./frontend
+    backend:
+        build: ./backend
+    db:
+       image: mongo:4.0-xenial
+
+Criaremos agora quais portas utilizaremos em cada serviço. Porém, dentro do db temos um volume especifico para ele que chamara vidly e está dentro do arquivo /data/db
+
+services:
+    frontend:
+        build: ./frontend
+        ports:
+            - 3000:3000
+    backend:
+        build: ./backend
+        ports:
+            - 3001:3001
+    db:
+        image: mongo:4.0-xenial
+        ports:
+            - 27017:27017
+        volumes:
+            - vidly:/data/db
+
+Agora temos as variaveis de ambiente, e as dependencias.
+
+version: "3.8"
+
+services:
+  frontend:
+    depends_on: 
+      - backend
+    build: ./frontend
+    ports:
+      - 3000:3000
+
+  backend: 
+    depends_on: 
+      - db
+    build: ./backend
+    ports: 
+      - 3001:3001
+    environment: 
+      DB_URL: mongodb://db/vidly
+    command: ./docker-entrypoint.sh
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
