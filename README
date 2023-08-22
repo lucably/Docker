@@ -9,15 +9,16 @@ Na imagem possui tudo que a sua aplicação precise para rodar possuindo:
 3. Arquivos que seu App utilizará;
 4. Variaveis de ambiente;
 
-Para CRIAR uma imagem basta rodar => docker build -t {NOME_IMAGEM}:{NUMERO_VERSAO} 
+1) Para CRIAR uma imagem basta rodar => docker build -t {NOME_IMAGEM}:{NUMERO_VERSAO} 
 obs: não é obrigado a ter o numero da versão exp: docker build -t minha_image ou docker build -t minha_image:1
 
-Para DELETAR uma imagem => docker image remove {MINHA_IMAGEM}:{NUMERO_VERSAO}
+2) Para DELETAR uma imagem => docker image remove {MINHA_IMAGEM}:{NUMERO_VERSAO}
 
-Para RENOMEAR uma imagem => docker image tag {MINHA_IMAGEM}:{NUMERO_VERSAO} e digita o novo nome {MINHA_IMAGEM}:{NUMERO_VERSAO}
+3) Para RENOMEAR uma imagem => docker image tag {MINHA_IMAGEM}:{NUMERO_VERSAO} e digita o novo nome {MINHA_IMAGEM}:{NUMERO_VERSAO}
 obs: um exp:  docker image tag minha_image docker minha_image:v1.0.0
 
-Para VISUALIZAR suas imagens basta rodar => "docker images"
+4) Para VISUALIZAR suas imagens basta rodar => "docker images"
+
 
 
 
@@ -26,14 +27,56 @@ O que é um Container?
 
 Um processo que roda dentro de uma maquina, o Container é criado a partir de uma imagem.
 
-Para Visualiza-la "docker ps" ou se quiser ver todas ja rodadas "docker ps -a"
+1) Para Visualiza-la "docker ps" ou se quiser ver todas ja rodadas "docker ps -a"
 
-Resumindo.
+2) Para rodar um container basta executar docker run -dp 3000:3000 --name {NOME_CONTAINER} {NOME_IMAGEM}
 
+Resumindo,
 Temos um APP, dentro do APP criamos um DOCKERFILE que no qual, gera uma IMAGEM. Da IMAGEM podemos construir/deletar/pausar/retornar um
 CONTAINER.
 
 APP -> IMAGEM -> CONTAINER
+
+3) Para saber os logs do container basta executar => "docker logs --help"
+
+4) Para executar comandos dentro do container basta executar => docker exec {NOME_CONTAINER} {COMANDO_LINXUS}
+exp: docker exec {NOME_CONTAINER} ls
+
+5) Para inciar e parar containers basta executar => docker stop {NOME_CONTAINER} (para parar); docker start {NOME_CONTAINER} (volta a funcionar)
+
+6) Para excluir o container basta executar => docker rm --help. Mas caso queira excluir um container em execução: docker rm -f {NOME_CONTAINER}
+
+UTILIZAÇÃO DE VOLUMES: 
+
+1) Para CRIAR um volume =>  docker volume create {NOME_VOLUME}
+
+2) Para VISUALIZAR as informações do seu volume => docker volume inspect {NOME_VOLUME}
+
+3) Para associar um VOLUME ao seu CONTAINER => docker run -dp 3000:3000 --name {NOME_CONTAINER} -v {NAME_VOLUME}:/app/dados {MINHA_IMAGEM}
+obs: meu_volume: /app/dados, este "/app/dados" é o diretório da sua maquina local que salvara os dados para ser mandando para o container na hora da de todas as criações.
+exp: docker run -dp 3000:3000 --name kiwi -v app-dados:/app/dados app:v2
+Nesta linha vc esta criando um container com nome "kiwi" rodando background(nao travando o terminal), usando o volume chamado "app-dados" adicionando ele dentro da pasta "app/dados" do container e utilizando a imagem "app:v2" na versao 2.
+
+
+4) Para conferir se foi criado com sucesso, execute => docker exec -it {NOME_CONTAINER} sh
+obs: De um "ls" e ve se seu volume foi criado.
+exp: "ls" ve que terá a pasta "dados" dentro do seu container e se entrar dentro dela n terá nenhum dado (pq nao adicionamos nada).
+
+5) Entre no DIRETORIO /app/dados e crie um arquivo de texto la com o comando => echo hi docker > docker.txt
+
+6) Depois dê um "ls" vc verá que tem um arquivo chamando docker.txt, executando agora um "cat docker.txt" vc vera um "hi docker" no terminal.
+
+Para testar se funcionou, delete seu container e crie um outro com outro nome porem utilizando o volume, vc vera que ele possui ainda o arquivo docker.txt dentro da pasta /app/dados.
+
+7) Copiando arquivos do container para minha maquina ou vice versa basta executar => docker cp {NOME_CONTAINER} {NOME_MAQUINA}
+exp: Vamos criar um arquivo chamado teste.txt e copia-lo para minha maquina
+    7.1) docker exec -it kiwi sh  (supondo que exista o container chamado "kiwi").
+    7.2) echo hi docker > teste.txt
+    7.3) ls (para ve se o arquivo foi criado)
+    7.4) Agora saia do seu container e execute na sua maquina o comando => docker cp kiwi:/app/teste.txt . (o "." quer dizer para mandar para o diretorio atual na minha maquina, provavelmente para minha IDE).
+    7.5) Confira agora se o arquivo "teste.txt" esta sendo listado na minha IDE aberta (que eu executei os comandos docker).
+    7.6) O contario seria este o comando => docker cp teste.txt kiwi:/app
+
 
 
 
