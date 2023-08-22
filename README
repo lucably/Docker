@@ -9,7 +9,15 @@ Na imagem possui tudo que a sua aplicação precise para rodar possuindo:
 3. Arquivos que seu App utilizará;
 4. Variaveis de ambiente;
 
-Para visualizar suas imagens basta rodar => "docker images"
+Para CRIAR uma imagem basta rodar => docker build -t {NOME_IMAGEM}:{NUMERO_VERSAO} 
+obs: não é obrigado a ter o numero da versão exp: docker build -t minha_image ou docker build -t minha_image:1
+
+Para DELETAR uma imagem => docker image remove {MINHA_IMAGEM}:{NUMERO_VERSAO}
+
+Para RENOMEAR uma imagem => docker image tag {MINHA_IMAGEM}:{NUMERO_VERSAO} e digita o novo nome {MINHA_IMAGEM}:{NUMERO_VERSAO}
+obs: um exp:  docker image tag minha_image docker minha_image:v1.0.0
+
+Para VISUALIZAR suas imagens basta rodar => "docker images"
 
 
 
